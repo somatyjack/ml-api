@@ -1,0 +1,20 @@
+version: "3.6"
+
+services:
+    web:
+        build: .
+        image: car-price-est:latest
+        container_name: carPriceEst
+        ports:
+            - "5050:5050"
+        volumes:
+            - type: bind
+              source: /home/nokaround/mlruns/1/a29ec0b98f5a4cfd8eff3e0675053780/artifacts
+              target: /models_src
+        environment:
+            - MAIN_MODEL_FILE=main_model/model.pkl
+            - SCALER_MODEL_FILE=scaler_model/model.pkl
+            - PORT=5050
+        env_file:
+            - .env
+        network_mode: host
